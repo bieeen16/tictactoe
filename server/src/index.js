@@ -2,13 +2,17 @@ import express from 'express';
 import cors from 'cors'
 import mongoose from 'mongoose'
 import routes from '../src/routes/routes.js'
+require('dotenv').config();
 
 const app = express();
+
+const PORT = process.env.PORT || 3001;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://bienx16:bKE0ga4yYECqia9r@cluster0.lrfxusf.mongodb.net/Cluster0?retryWrites=true&w=majority", {
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).then(() => {
@@ -19,7 +23,7 @@ mongoose.connect("mongodb+srv://bienx16:bKE0ga4yYECqia9r@cluster0.lrfxusf.mongod
   });
   app.use(express.json());
 
-  // Use the API routes
+ 
   app.use('/', routes);
 
-app.listen(3001, () => console.log("server is running!"))
+app.listen(PORT, () => console.log("server is running!"))
