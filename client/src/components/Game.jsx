@@ -177,7 +177,7 @@ const Game = () => {
   const saveMatchHistory = async () => {
     try {
 
-      const response = await axios.post("https://tictactoe-f3is.onrender.com/match-history/", {
+      const response = await axios.post("http://localhost:3001/match-history/", {
         
       matchData: [
             {
