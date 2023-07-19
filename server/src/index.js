@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors'
 import mongoose from 'mongoose'
 import routes from '../src/routes/routes.js'
-require('dotenv').config();
 
 const app = express();
 
@@ -26,4 +25,4 @@ mongoose.connect(MONGODB_URI, {
  
   app.use('/', routes);
 
-app.listen(PORT, () => console.log("server is running!"))
+app.listen(PORT, () => console.log(`server is running in! ${PORT}`))
