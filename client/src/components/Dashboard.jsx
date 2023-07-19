@@ -12,7 +12,7 @@ const Dashboard = () => {
     const fetchGames = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/?page=${currentPage}`
+          `https://tictactoe-f3is.onrender.com/?page=${currentPage}`
         );
         setGames(response.data.games);
         setTotalPages(response.data.totalPages);
