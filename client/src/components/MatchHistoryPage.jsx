@@ -11,7 +11,7 @@ const MatchHistoryPage = () => {
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await axios.get(`https://tictactoe-f3is.onrender.com/match-history/${gameId}`);
+        const response = await axios.get(`https://tictactoe-seven-mu.vercel.app/match-history/${gameId}`);
         setGame(response.data);
       } catch (error) {
         setError(error.message);
