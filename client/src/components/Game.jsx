@@ -82,6 +82,7 @@ const Game = () => {
         const winnerName = currentBoard[a] === 'X' ? player1Name : player2Name;
         const matchResult = `${winnerName} wins`;
         setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
+        setMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
         updateScores(currentBoard[a]);
         return;
       }
@@ -91,6 +92,7 @@ const Game = () => {
       setWinner('Draw');
       const matchResult = 'Draw!';
       setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
+      setMatchNumber((prevMatchNumber) => [...prevMatchNumber, matchNumber]);
       updateScores('Draw');
     }
   };
@@ -147,7 +149,6 @@ const Game = () => {
       }
 
       setBoard(initialBoard);
-      setMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
     }
     setWinner(null);
   };
@@ -209,6 +210,8 @@ const Game = () => {
     }
   };
 
+  console.log(matchNumber)
+  console.log(matchHistory)
   return (
     <div className="flex flex-col items-center mt-8">
       {modalOpen && (
