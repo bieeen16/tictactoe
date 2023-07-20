@@ -92,7 +92,7 @@ const Game = () => {
       setWinner('Draw');
       const matchResult = 'Draw!';
       setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
-      setMatchNumber((prevMatchNumber) => [...prevMatchNumber, matchNumber]);
+      ssetMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
       updateScores('Draw');
     }
   };
@@ -209,6 +209,9 @@ const Game = () => {
       alert("Error saving match history");
     }
   };
+
+  console.log(matchNumber)
+  console.log(matchHistory)
 
   return (
     <div className="flex flex-col items-center mt-8">
