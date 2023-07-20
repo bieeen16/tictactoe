@@ -11,7 +11,7 @@ const MatchHistoryPage = () => {
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/match-history/${gameId}`);
+        const response = await axios.get(`http://localhost:3001/${gameId}`);
         setGame(response.data);
       } catch (error) {
         setError(error.message);

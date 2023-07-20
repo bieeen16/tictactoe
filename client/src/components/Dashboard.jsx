@@ -29,7 +29,7 @@ const Dashboard = () => {
   };
 
   const handleMatchClick = (gameId) => {
-    navigate(`/match-history/${gameId}`);
+    navigate(`/${gameId}`);
   };
 
   const handlePrevPage = () => {

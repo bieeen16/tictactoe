@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/match-history' element={<Game />} />
-          <Route path='/match-history/:gameId' element={<MatchHistoryPage />} />
+          <Route path='/:gameId' element={<MatchHistoryPage />} />
         </Routes>
       </Router>
     </div>
