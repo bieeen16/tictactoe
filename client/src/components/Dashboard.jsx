@@ -60,7 +60,7 @@ const Dashboard = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">TIC TAC TOE</h1>
+      <h1 className="text-3xl font-bold mb-4">TIC TAC TOEs</h1>
       <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
       <button
         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
