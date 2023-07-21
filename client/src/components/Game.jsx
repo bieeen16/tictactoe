@@ -210,9 +210,6 @@ const Game = () => {
     }
   };
 
-  console.log(matchNumber)
-  console.log(matchHistory)
-
   return (
     <div className="flex flex-col items-center mt-8">
       {modalOpen && (
