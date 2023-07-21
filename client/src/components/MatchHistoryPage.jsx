@@ -8,10 +8,10 @@ const MatchHistoryPage = () => {
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
+  useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await axios.get(`https://tictactoe-f3is.onrender.com/${gameId}`);
+        const response = await axios.get(`http://localhost:3001/${gameId}`);
         setGame(response.data);
       } catch (error) {
         setError(error.message);
@@ -19,7 +19,7 @@ const MatchHistoryPage = () => {
     };
 
     fetchGame();
-  // }, [gameId]);
+  }, [gameId]);
 
   if (!gameId) {
     return <p>No match details available.</p>;
