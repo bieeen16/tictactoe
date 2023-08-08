@@ -12,7 +12,7 @@ const MatchHistoryPage = () => {
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await axios.get(`https://tictactoe-seven-mu.vercel.app/match-history/${gameId}`);
+        const response = await axios.get(`${API_BASE_URL}/match-history/${gameId}`);
         setGame(response.data);
       } catch (error) {
         setError(error.message);
