@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:gameId', async (req, res) => {
+router.get('/match-history/:gameId', async (req, res) => {
   try {
     const gameId = req.params.gameId;
     const game = await GameData.findById(gameId);
