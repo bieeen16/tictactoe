@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: 'https://tictactoe-seven-mu.vercel.app/' // Replace with your actual client-side app domain
+  origin: 'https://tictactoe-seven-mu.vercel.app' // Replace with your actual client-side app domain
 }));
 
 mongoose.connect("mongodb+srv://bienx16:bKE0ga4yYECqia9r@cluster0.lrfxusf.mongodb.net/Cluster0?retryWrites=true&w=majority", {
