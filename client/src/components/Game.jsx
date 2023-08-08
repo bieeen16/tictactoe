@@ -92,7 +92,7 @@ const Game = () => {
       setWinner('Draw');
       const matchResult = 'Draw!';
       setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
-      ssetMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
+      setMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
       updateScores('Draw');
     }
   };
