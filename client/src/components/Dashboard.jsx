@@ -30,7 +30,7 @@ const Dashboard = () => {
   };
 
   const handleMatchClick = (gameId) => {
-    navigate(`/${gameId}`);
+    navigate(`/match-history/${gameId}`);
   };
 
   const handlePrevPage = () => {
