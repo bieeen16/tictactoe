@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MatchDetails from './MatchDetails';
 import { useParams } from 'react-router-dom';
+import API_BASE_URL from './config';
 
 const MatchHistoryPage = () => {
   const { gameId } = useParams();
@@ -11,7 +12,7 @@ const MatchHistoryPage = () => {
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await axios.get(`https://tictactoe-f3is.onrender.com/${gameId}`);
+        const response = await axios.get(`${API_BASE_URL}/${gameId}`);
         setGame(response.data);
       } catch (error) {
         setError(error.message);

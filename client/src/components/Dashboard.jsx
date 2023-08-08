@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_BASE_URL from './config';
 
 const Dashboard = () => {
   const [games, setGames] = useState([]);
@@ -12,7 +13,7 @@ const Dashboard = () => {
     const fetchGames = async () => {
       try {
         const response = await axios.get(
-          `https://tictactoe-f3is.onrender.com/?page=${currentPage}`
+          `${API_BASE_URL}/?page=${currentPage}`
         );
         setGames(response.data.games);
         setTotalPages(response.data.totalPages);
