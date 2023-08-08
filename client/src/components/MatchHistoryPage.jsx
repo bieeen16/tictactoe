@@ -9,7 +9,7 @@ const MatchHistoryPage = () => {
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
+  useEffect(() => {
     const fetchGame = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/match-history/${gameId}`);
@@ -17,10 +17,10 @@ const MatchHistoryPage = () => {
       } catch (error) {
         setError(error.message);
       }
-      
     };
+
     fetchGame();
-  // }, [gameId]);
+  }, [gameId]);
 
 
   if (!gameId) {
