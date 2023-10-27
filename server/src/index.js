@@ -28,7 +28,7 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions)); // Apply CORS middleware with custom options
 
-const dbURI = process.env.MONGODB_URI || "your-local-db-uri";
+const dbURI = process.env.MONGODB_URI;
 const port = process.env.PORT || 3001;
 
 mongoose
