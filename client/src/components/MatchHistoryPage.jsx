@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MatchDetails from "./MatchDetails";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import API_BASE_URL from "./config";
 
 const MatchHistoryPage = () => {
   const { gameId } = useParams();
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
-
-  const history = useHistory();
 
   useEffect(() => {
     const fetchGame = async () => {
