@@ -6,7 +6,7 @@ import API_BASE_URL from "./config";
 
 const MatchHistoryPage = () => {
   const { gameId } = useParams();
-  const [game, setGame] = useState([]);
+  const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,6 +19,7 @@ const MatchHistoryPage = () => {
       } catch (error) {
         setError(error.message);
       }
+      console.log("gameId:", gameId);
     };
 
     fetchGame();
