@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PlayerModal from './PlayerModal';
-import MatchHistory from './MatchHistory';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import PlayerModal from "./PlayerModal";
+import MatchHistory from "./MatchHistory";
+import axios from "axios";
 
 const Game = () => {
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ const Game = () => {
   const [rollingDice, setRollingDice] = useState(false);
   const [diceResult, setDiceResult] = useState(null);
   const [showGame, setShowGame] = useState(false);
-  const [player1Name, setPlayer1Name] = useState('');
-  const [player2Name, setPlayer2Name] = useState('');
+  const [player1Name, setPlayer1Name] = useState("");
+  const [player2Name, setPlayer2Name] = useState("");
   const [modalOpen, setModalOpen] = useState(true);
   const [matchHistory, setMatchHistory] = useState([]);
   const [player1Wins, setPlayer1Wins] = useState(0);
@@ -24,7 +24,6 @@ const Game = () => {
   const [player1Draws, setPlayer1Draws] = useState(0);
   const [player2Draws, setPlayer2Draws] = useState(0);
   const [matchNumber, setMatchNumber] = useState([]);
-  
 
   useEffect(() => {
     if (showGame) {
@@ -63,7 +62,7 @@ const Game = () => {
     if (board[index] !== null || winner) return;
 
     const newBoard = [...board];
-    newBoard[index] = isPlayer1 ? 'X' : 'O';
+    newBoard[index] = isPlayer1 ? "X" : "O";
     setBoard(newBoard);
     setIsPlayer1(!isPlayer1);
 
@@ -79,21 +78,27 @@ const Game = () => {
         currentBoard[a] === currentBoard[c]
       ) {
         setWinner(currentBoard[a]);
-        const winnerName = currentBoard[a] === 'X' ? player1Name : player2Name;
+        const winnerName = currentBoard[a] === "X" ? player1Name : player2Name;
         const matchResult = `${winnerName} wins`;
         setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
-        setMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
+        setMatchNumber((prevMatchNumber) => [
+          ...prevMatchNumber,
+          prevMatchNumber.length + 1,
+        ]);
         updateScores(currentBoard[a]);
         return;
       }
     }
 
     if (currentBoard.every((cell) => cell !== null)) {
-      setWinner('Draw');
-      const matchResult = 'Draw!';
+      setWinner("Draw");
+      const matchResult = "Draw!";
       setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
-      setMatchNumber((prevMatchNumber) => [...prevMatchNumber, prevMatchNumber.length + 1]);
-      updateScores('Draw');
+      setMatchNumber((prevMatchNumber) => [
+        ...prevMatchNumber,
+        prevMatchNumber.length + 1,
+      ]);
+      updateScores("Draw");
     }
   };
 
@@ -109,12 +114,15 @@ const Game = () => {
   };
 
   const renderWinnerMessage = () => {
-    if (winner === 'Draw') {
+    if (winner === "Draw") {
       return <div className="text-lg mt-4">It's a draw!</div>;
     } else if (winner) {
       return (
         <div className="text-lg mt-4">
-          {winner === 'X' ? `Player 1 : ${player1Name} (X)` : `Player 2 ${player2Name} (O)`} wins!
+          {winner === "X"
+            ? `Player 1 : ${player1Name} (X)`
+            : `Player 2 ${player2Name} (O)`}{" "}
+          wins!
         </div>
       );
     } else {
@@ -124,7 +132,8 @@ const Game = () => {
             <p className="text-red-600 mx-2">{player1Wins}</p>|
             <p className="text-blue-600 mx-2">{player2Wins}</p>
           </div>
-          <div className="font-bold">Your Turn : </div>{isPlayer1 ? `${player1Name} (X)` : `${player2Name} (O)`}
+          <div className="font-bold">Your Turn : </div>
+          {isPlayer1 ? `${player1Name} (X)` : `${player2Name} (O)`}
         </div>
       );
     }
@@ -134,15 +143,15 @@ const Game = () => {
     if (winner) {
       let result;
 
-      if (winner === 'Draw') {
-        result = 'Draw';
-      } else if (winner === 'X') {
-        result = player1Name
-      } else if (winner === 'O') {
-        result = player2Name
+      if (winner === "Draw") {
+        result = "Draw";
+      } else if (winner === "X") {
+        result = player1Name;
+      } else if (winner === "O") {
+        result = player2Name;
       }
 
-      if (result === 'Draw') {
+      if (result === "Draw") {
         setIsPlayer1(!isPlayer1);
       } else {
         setIsPlayer1(result === player1Name);
@@ -163,10 +172,10 @@ const Game = () => {
   };
 
   const updateScores = (winner) => {
-    if (winner === 'X') {
+    if (winner === "X") {
       setPlayer1Wins(player1Wins + 1);
       setPlayer2Losses(player2Losses + 1);
-    } else if (winner === 'O') {
+    } else if (winner === "O") {
       setPlayer2Wins(player2Wins + 1);
       setPlayer1Losses(player1Losses + 1);
     } else {
@@ -177,35 +186,36 @@ const Game = () => {
 
   const saveMatchHistory = async () => {
     try {
-
-      const response = await axios.post("https://tictactoe-f3is.onrender.com/match-history/", {
-        
-      matchData: [
+      const response = await axios.post(
+        "https://tictactoe-f3is.onrender.com/match-history/",
+        {
+          matchData: [
             {
               matchNumber,
               matchHistory,
             },
-              ],
-              player1Name,
-              player2Name,
-              p1Wins: player1Wins,
-              p2Wins: player2Wins,
-              p1Losses: player1Losses,
-              p2Losses: player2Losses,
-              p1Draws: player1Draws,
-              p2Draws: player2Draws,
-                  });
+          ],
+          player1Name,
+          player2Name,
+          p1Wins: player1Wins,
+          p2Wins: player2Wins,
+          p1Losses: player1Losses,
+          p2Losses: player2Losses,
+          p1Draws: player1Draws,
+          p2Draws: player2Draws,
+        }
+      );
 
       if (response.status === 200) {
-        console.log('Match history saved successfully!');
+        console.log("Match history saved successfully!");
         alert("Game Data Saved!");
-        navigate('/');
+        navigate("/");
       } else {
-        console.log('Failed to save match history.');
+        console.log("Failed to save match history.");
         alert("Failed");
       }
     } catch (error) {
-      console.error('Error saving match history:', error);
+      console.error("Error saving match history:", error);
       alert("Error saving match history");
     }
   };
@@ -230,7 +240,7 @@ const Game = () => {
       </div>
       {rollingDice ? (
         <div className="text-3xl font-bold text-center">
-          Rolling Dice: {diceResult !== null ? diceResult : '...'}
+          Rolling Dice: {diceResult !== null ? diceResult : "..."}
         </div>
       ) : showGame ? (
         <>
@@ -253,9 +263,7 @@ const Game = () => {
               <br />
               <button
                 className="bg-blue-500 text-white py-2 px-4 mt-4 rounded"
-                onClick={
-                  saveMatchHistory
-                }
+                onClick={saveMatchHistory}
               >
                 Save and Go to Dashboard
               </button>
@@ -263,7 +271,10 @@ const Game = () => {
           )}
         </>
       ) : (
-        <button className="bg-blue-500 text-white py-2 px-4 mt-4 rounded" onClick={handleRollDice}>
+        <button
+          className="bg-blue-500 text-white py-2 px-4 mt-4 rounded"
+          onClick={handleRollDice}
+        >
           Roll Dice
         </button>
       )}
