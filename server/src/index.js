@@ -5,24 +5,8 @@ import routes from "../src/routes/routes.js";
 
 const app = express();
 
-// Allow requests only from specific origins (your frontend domains)
-const allowedOrigins = [
-  "https://tictactoe-bieeen16.vercel.app/", // Add your local development URL
-  "https://tictactoe-f3is.onrender.com/", // Add your production frontend URL
-];
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
-
 app.use(express.json());
-app.use(cors(corsOptions)); // Apply CORS middleware with custom options
+app.use(cors());
 
 mongoose
   .connect(
@@ -38,9 +22,8 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
   });
-
 app.use(express.json());
 
 app.use("/", routes);
 
-app.listen(3001, () => console.log("Server is running!"));
+app.listen(3001, () => console.log("server is running!"));
