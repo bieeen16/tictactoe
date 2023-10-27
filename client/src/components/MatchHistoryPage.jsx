@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import MatchDetails from './MatchDetails';
-import { useParams } from 'react-router-dom';
-import API_BASE_URL from './config';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import MatchDetails from "./MatchDetails";
+import { useParams } from "react-router-dom";
+import API_BASE_URL from "./config";
 
 const MatchHistoryPage = () => {
   const { gameId } = useParams();
-  const [game, setGame] = useState(null);
+  const [game, setGame] = useState();
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/match-history/${gameId}`);
+        const response = await axios.get(
+          `${API_BASE_URL}/match-history/${gameId}`
+        );
         setGame(response.data);
       } catch (error) {
         setError(error.message);
@@ -21,7 +23,6 @@ const MatchHistoryPage = () => {
 
     fetchGame();
   }, [gameId]);
-
 
   if (!gameId) {
     return <p>No match details available.</p>;
