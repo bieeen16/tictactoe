@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import routes from "../src/routes/routes.js";
+import dotenv from "dotenv";
+
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
 
@@ -25,14 +28,14 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions)); // Apply CORS middleware with custom options
 
+const dbURI = process.env.MONGODB_URI || "your-local-db-uri";
+const port = process.env.PORT || 3001;
+
 mongoose
-  .connect(
-    "mongodb+srv://bienx16:bKE0ga4yYECqia9r@cluster0.lrfxusf.mongodb.net/Cluster0?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(dbURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -40,8 +43,6 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-app.use(express.json());
-
 app.use("/", routes);
 
-app.listen(3001, () => console.log("Server is running!"));
+app.listen(port, () => console.log(`Server is running on port ${port}`));

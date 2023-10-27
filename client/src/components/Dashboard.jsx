@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import API_BASE_URL from './config';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "./config";
 
 const Dashboard = () => {
   const [games, setGames] = useState([]);
@@ -18,7 +18,7 @@ const Dashboard = () => {
         setGames(response.data.games);
         setTotalPages(response.data.totalPages);
       } catch (error) {
-        console.error('Error retrieving games:', error);
+        console.error("Error retrieving games:", error);
       }
     };
 
@@ -26,7 +26,7 @@ const Dashboard = () => {
   }, [currentPage]);
 
   const handleNewGame = () => {
-    navigate('/match-history/');
+    navigate("/match-history/");
   };
 
   const handleMatchClick = (gameId) => {
@@ -48,7 +48,7 @@ const Dashboard = () => {
         <li
           key={i}
           className={`${
-            i === currentPage ? 'bg-blue-500 text-white' : 'bg-white'
+            i === currentPage ? "bg-blue-500 text-white" : "bg-white"
           } rounded-full w-8 h-8 flex items-center justify-center cursor-pointer mx-1`}
           onClick={() => setCurrentPage(i)}
         >
@@ -104,11 +104,8 @@ const Dashboard = () => {
               Next Page
             </button>
           </div>
-          <ul className="flex justify-center mt-4">
-            {renderPageNumbers()}
-          </ul>
+          <ul className="flex justify-center mt-4">{renderPageNumbers()}</ul>
         </div>
-        
       ) : (
         <p className="mt-2">No games found.</p>
       )}
