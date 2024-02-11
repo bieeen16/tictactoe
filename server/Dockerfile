@@ -13,8 +13,6 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-ENV PORT=3001
-
 # Expose port 3001
 EXPOSE 3001
 
