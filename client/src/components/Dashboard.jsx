@@ -13,9 +13,11 @@ const Dashboard = () => {
     const fetchGames = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/?page=${currentPage}`
+          `${API_BASE_URL}/?page=${currentPage}&sort=-createdAt`
         );
-        setGames(response.data.games);
+
+        const sortedGames = response.data.games;
+        setGames(sortedGames);
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error retrieving games:", error);

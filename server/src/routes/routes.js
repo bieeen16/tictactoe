@@ -24,6 +24,7 @@ router.get("/", async (req, res) => {
     const totalPages = Math.ceil(totalGames / perPage);
 
     const games = await GameData.find()
+      .sort({ createdAt: -1 })
       .skip((page - 1) * perPage)
       .limit(perPage);
 
