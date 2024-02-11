@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PlayerModal from "./PlayerModal";
 import MatchHistory from "./MatchHistory";
 import axios from "axios";
+import API_BASE_URL from "./config";
 
 const Game = () => {
   const navigate = useNavigate();
@@ -186,25 +187,22 @@ const Game = () => {
 
   const saveMatchHistory = async () => {
     try {
-      const response = await axios.post(
-        "https://tictactoe-f3is.onrender.com/match-history/",
-        {
-          matchData: [
-            {
-              matchNumber,
-              matchHistory,
-            },
-          ],
-          player1Name,
-          player2Name,
-          p1Wins: player1Wins,
-          p2Wins: player2Wins,
-          p1Losses: player1Losses,
-          p2Losses: player2Losses,
-          p1Draws: player1Draws,
-          p2Draws: player2Draws,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/match-history/`, {
+        matchData: [
+          {
+            matchNumber,
+            matchHistory,
+          },
+        ],
+        player1Name,
+        player2Name,
+        p1Wins: player1Wins,
+        p2Wins: player2Wins,
+        p1Losses: player1Losses,
+        p2Losses: player2Losses,
+        p1Draws: player1Draws,
+        p2Draws: player2Draws,
+      });
 
       if (response.status === 200) {
         console.log("Match history saved successfully!");
