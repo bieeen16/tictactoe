@@ -34,20 +34,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/match-history/:gameId", async (req, res) => {
-  try {
-    const gameId = req.params.gameId;
-    const game = await GameData.findById(gameId);
+router.get(
+  "https://tictactoe-bieeen16.vercel.app/match-history/:gameId",
+  async (req, res) => {
+    try {
+      const gameId = req.params.gameId;
+      const game = await GameData.findById(gameId);
 
-    if (!game) {
-      return res.status(404).json({ error: "Game not found." });
+      if (!game) {
+        return res.status(404).json({ error: "Game not found." });
+      }
+
+      res.status(200).json(game);
+    } catch (error) {
+      console.error("Error retrieving match details:", error);
+      res.status(500).json({ error: "Failed to retrieve match details." });
     }
-
-    res.status(200).json(game);
-  } catch (error) {
-    console.error("Error retrieving match details:", error);
-    res.status(500).json({ error: "Failed to retrieve match details." });
   }
-});
+);
 
 export default router;
