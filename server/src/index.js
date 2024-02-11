@@ -9,7 +9,11 @@ dotenv.config(); // Load environment variables from .env file
 const app = express();
 
 // Allow requests only from specific origins (your frontend domains)
-const allowedOrigins = ["*"];
+const allowedOrigins = [
+  "http://localhost:3000", // Add your local development URL
+  "https://tictactoe-bieeen16.vercel.app/", // Add your production frontend URL
+  "https://tictactoe-f3is.onrender.com/",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
