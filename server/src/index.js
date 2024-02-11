@@ -25,25 +25,6 @@ const corsOptions = {
   },
 };
 
-async function updateDocuments() {
-  try {
-    const games = await GameData.find();
-
-    for (const game of games) {
-      if (!game.createdAt) {
-        game.createdAt = new Date();
-        await game.save();
-      }
-    }
-
-    console.log("Documents updated successfully.");
-  } catch (error) {
-    console.error("Error updating documents:", error);
-  } finally {
-    mongoose.disconnect();
-  }
-}
-
 app.use(cors(corsOptions)); // Apply CORS middleware with custom options
 app.use(express.json());
 
