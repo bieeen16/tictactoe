@@ -19,7 +19,6 @@ const MatchHistoryPage = () => {
       } catch (error) {
         setError(error.message);
       }
-      console.log("gameId:", gameId);
     };
 
     fetchGame();
