@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const gameDataSchema = new mongoose.Schema({
   matchData: [
@@ -15,6 +15,7 @@ const gameDataSchema = new mongoose.Schema({
   p2Losses: { type: Number, required: true },
   p1Draws: { type: Number, required: true },
   p2Draws: { type: Number, required: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const GameData = mongoose.model("GameData", gameDataSchema);
