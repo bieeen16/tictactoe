@@ -26,7 +26,7 @@ const Dashboard = () => {
   }, [currentPage]);
 
   const handleNewGame = () => {
-    navigate("/match-history/");
+    navigate("/match/");
   };
 
   const handleMatchClick = (gameId) => {
