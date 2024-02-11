@@ -25,8 +25,8 @@ const corsOptions = {
   },
 };
 
-app.use(express.json());
 app.use(cors(corsOptions)); // Apply CORS middleware with custom options
+app.use(express.json());
 
 const dbURI = process.env.MONGODB_URI;
 const port = process.env.PORT || 3001;
