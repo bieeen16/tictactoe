@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API_BASE_URL from "./config";
 
 const Dashboard = () => {
@@ -30,7 +30,7 @@ const Dashboard = () => {
   };
 
   const handleMatchClick = (gameId) => {
-    navigate(`/match-history/:${gameId}`);
+    navigate(`/match-history/${gameId}`);
   };
 
   const handlePrevPage = () => {
@@ -78,13 +78,12 @@ const Dashboard = () => {
                 key={game._id}
                 className="bg-white rounded shadow-md py-2 px-4 mt-2"
               >
-                <a
-                  href={game._id}
-                  onClick={() => handleMatchClick(game._id)}
+                <Link
+                  to={`/match-history/${game._id}`}
                   className="text-blue-500 hover:underline"
                 >
                   {game.player1Name} VS {game.player2Name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
