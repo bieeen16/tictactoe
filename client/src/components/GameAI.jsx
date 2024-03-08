@@ -206,7 +206,11 @@ const GameAI = () => {
             <p className="text-blue-600 mx-2">{player2Wins}</p>
           </div>
           <div className="font-bold">Your Turn : </div>
-          {isPlayer1 ? `${player1Name} (X)` : `${player2Name} (O)`}
+          {isPlayer1 ? (
+            <span style={{ color: "#DC2625" }}>{`${player1Name} (X)`}</span>
+          ) : (
+            <span style={{ color: "#3B81F6" }}>{`${player2Name} (O)`}</span>
+          )}
         </div>
       );
     }
