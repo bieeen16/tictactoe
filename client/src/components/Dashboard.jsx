@@ -30,6 +30,9 @@ const Dashboard = () => {
   const handleNewGame = () => {
     navigate("/match/");
   };
+  const handleNewGameAI = () => {
+    navigate("/match-ai");
+  };
 
   const handleMatchClick = (gameId) => {
     navigate(`/match-history/${gameId}`);
@@ -66,10 +69,16 @@ const Dashboard = () => {
       <h1 className="text-3xl font-bold mb-4">TIC TAC TOE</h1>
       <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
       <button
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 mx-2 px-4 rounded"
+        onClick={handleNewGameAI}
+      >
+        Play With AI
+      </button>
+      <button
         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         onClick={handleNewGame}
       >
-        New Game
+        Multiplayer
       </button>
       <h3 className="text-lg font-bold mt-4">Games:</h3>
       {games.length > 0 ? (

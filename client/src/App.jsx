@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Game from "./components/Game";
 import Dashboard from "./components/Dashboard";
 import MatchHistoryPage from "./components/MatchHistoryPage";
+import GameAI from "./components/GameAI";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/match" element={<Game />} />
           <Route path="/match-history/:gameId" element={<MatchHistoryPage />} />
+          <Route path="/match-ai" element={<GameAI />} />
         </Routes>
       </Router>
     </div>
