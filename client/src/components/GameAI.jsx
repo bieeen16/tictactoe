@@ -253,7 +253,10 @@ const GameAI = () => {
         : `${player2Name} wins`;
 
     setMatchHistory((prevHistory) => [...prevHistory, matchResult]);
-    setMatchNumber((prevMatchNumber) => prevMatchNumber + 1);
+    setMatchNumber((prevMatchNumber) => [
+      ...prevMatchNumber,
+      prevMatchNumber.length + 1,
+    ]);
 
     if (winner === "X") {
       setPlayer1Wins(player1Wins + 1);
