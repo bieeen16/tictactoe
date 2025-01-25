@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const MatchHistory = ({
   history,
@@ -11,6 +11,32 @@ const MatchHistory = ({
   player1Draws,
   player2Draws,
 }) => {
+  const [sortBy, setSortBy] = useState("date");
+  const [filterBy, setFilterBy] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const matchesPerPage = 5;
+
+  const renderStatistics = () => {
+    return (
+      <div className="mt-4">
+        <h3 className="text-lg font-bold">Statistics</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <h4>Win Rate</h4>
+            <p>
+              {(
+                (player1Wins / (player1Wins + player1Losses + player1Draws)) *
+                100
+              ).toFixed(1)}
+              %
+            </p>
+          </div>
+          {/* Add more statistics */}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <aside className="bg-gray-100 p-4 mt-4 rounded">
       <h2 className="text-xl font-bold mb-4">Match History</h2>
@@ -40,6 +66,7 @@ const MatchHistory = ({
           </span>
         </div>
       </div>
+      {renderStatistics()}
     </aside>
   );
 };

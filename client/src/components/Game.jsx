@@ -25,6 +25,8 @@ const Game = () => {
   const [player1Draws, setPlayer1Draws] = useState(0);
   const [player2Draws, setPlayer2Draws] = useState(0);
   const [matchNumber, setMatchNumber] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (showGame) {
@@ -105,12 +107,15 @@ const Game = () => {
 
   const renderCell = (index) => {
     return (
-      <div
-        className="border border-gray-300 w-12 h-12 flex items-center justify-center text-2xl cursor-pointer"
+      <button
+        className="border border-gray-300 w-12 h-12 flex items-center justify-center text-2xl"
         onClick={() => handleCellClick(index)}
+        aria-label={`Cell ${index + 1}`}
+        aria-pressed={board[index] !== null}
+        role="gridcell"
       >
         {board[index]}
-      </div>
+      </button>
     );
   };
 
@@ -190,6 +195,8 @@ const Game = () => {
   };
 
   const saveMatchHistory = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const response = await axios.post(`${API_BASE_URL}/match-history/`, {
         matchData: [
@@ -217,8 +224,10 @@ const Game = () => {
         alert("Failed");
       }
     } catch (error) {
+      setError("Failed to save game. Please try again.");
       console.error("Error saving match history:", error);
-      alert("Error saving match history");
+    } finally {
+      setIsLoading(false);
     }
   };
 

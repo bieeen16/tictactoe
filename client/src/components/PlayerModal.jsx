@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PlayerModal = ({ isOpen, onClose, onNamesSubmit }) => {
-  const [player1Name, setPlayer1Name] = useState('');
-  const [player2Name, setPlayer2Name] = useState('');
+  const [player1Name, setPlayer1Name] = useState("");
+  const [player2Name, setPlayer2Name] = useState("");
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
 
   const backToDashboard = () => {
-    navigate('/');
+    navigate("/");
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!player1Name.trim()) {
+      newErrors.player1Name = "Player 1 name is required";
+    }
+    if (!player2Name.trim()) {
+      newErrors.player2Name = "Player 2 name is required";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNamesSubmit(player1Name, player2Name);
+    if (validateForm()) {
+      onNamesSubmit(player1Name, player2Name);
+    }
   };
 
   if (!isOpen) return null;
@@ -24,7 +38,10 @@ const PlayerModal = ({ isOpen, onClose, onNamesSubmit }) => {
         <h2 className="text-2xl font-bold mb-4">Enter Player Names</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor="player1Name">
+            <label
+              className="block text-sm font-bold mb-2"
+              htmlFor="player1Name"
+            >
               Player 1 Name:
             </label>
             <input
@@ -37,7 +54,10 @@ const PlayerModal = ({ isOpen, onClose, onNamesSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-bold mb-2" htmlFor="player2Name">
+            <label
+              className="block text-sm font-bold mb-2"
+              htmlFor="player2Name"
+            >
               Player 2 Name:
             </label>
             <input

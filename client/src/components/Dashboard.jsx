@@ -7,20 +7,26 @@ const Dashboard = () => {
   const [games, setGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("date");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGames = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(
           `${API_BASE_URL}/?page=${currentPage}&sort=-createdAt`
         );
-
-        const sortedGames = response.data.games;
-        setGames(sortedGames);
+        setGames(response.data.games);
         setTotalPages(response.data.totalPages);
       } catch (error) {
+        setError("Failed to load games. Please try again.");
         console.error("Error retrieving games:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
