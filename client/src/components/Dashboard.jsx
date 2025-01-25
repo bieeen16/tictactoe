@@ -12,6 +12,8 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("date");
   const navigate = useNavigate();
+  const [showCreateRoom, setShowCreateRoom] = useState(false);
+  const [roomCode, setRoomCode] = useState("");
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -68,6 +70,21 @@ const Dashboard = () => {
       );
     }
     return pageNumbers;
+  };
+
+  const handleCreateRoom = async () => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/rooms`);
+      navigate(`/room/${response.data.roomId}`);
+    } catch (error) {
+      console.error("Error creating room:", error);
+    }
+  };
+
+  const handleJoinRoom = () => {
+    if (roomCode.trim()) {
+      navigate(`/room/${roomCode}`);
+    }
   };
 
   return (
@@ -128,6 +145,29 @@ const Dashboard = () => {
       ) : (
         <p className="mt-2">No games found.</p>
       )}
+      <div className="mt-4">
+        <button
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+          onClick={() => setShowCreateRoom(true)}
+        >
+          Create Multiplayer Room
+        </button>
+        <div className="flex gap-2 mt-2">
+          <input
+            type="text"
+            value={roomCode}
+            onChange={(e) => setRoomCode(e.target.value)}
+            placeholder="Enter room code"
+            className="border rounded px-2 py-1"
+          />
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={handleJoinRoom}
+          >
+            Join Room
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -4,8 +4,9 @@ import PlayerModal from "./PlayerModal";
 import MatchHistory from "./MatchHistory";
 import axios from "axios";
 import API_BASE_URL from "./config";
+import socketService from "../services/socketService";
 
-const Game = () => {
+const Game = ({ isMultiplayer, roomId, players }) => {
   const navigate = useNavigate();
   const initialBoard = Array(9).fill(null);
   const [board, setBoard] = useState(initialBoard);
@@ -27,20 +28,29 @@ const Game = () => {
   const [matchNumber, setMatchNumber] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isSpectator, setIsSpectator] = useState(false);
 
   useEffect(() => {
     if (showGame) {
       const timer = setTimeout(() => {
         setRollingDice(false);
+        setShowGame(true);
       }, 2000);
 
       return () => clearTimeout(timer);
     }
   }, [showGame]);
 
+  useEffect(() => {
+    if (isMultiplayer) {
+      socketService.onMoveMade((move) => {
+        handleCellClick(move.index);
+      });
+    }
+  }, []);
+
   const handleRollDice = () => {
     setRollingDice(true);
-    setShowGame(false);
 
     setTimeout(() => {
       const result = Math.floor(Math.random() * 2) + 1;
@@ -63,11 +73,16 @@ const Game = () => {
 
   const handleCellClick = (index) => {
     if (board[index] !== null || winner) return;
+    if (isMultiplayer && !isYourTurn()) return;
 
     const newBoard = [...board];
     newBoard[index] = isPlayer1 ? "X" : "O";
     setBoard(newBoard);
     setIsPlayer1(!isPlayer1);
+
+    if (isMultiplayer) {
+      socketService.makeMove(roomId, { index });
+    }
 
     checkWinner(newBoard);
   };
@@ -106,16 +121,34 @@ const Game = () => {
   };
 
   const renderCell = (index) => {
+    const isWinningCell = board[index] === winner;
+    const isLastMove = board[index] !== null;
+
     return (
       <button
-        className="border border-gray-300 w-12 h-12 flex items-center justify-center text-2xl"
+        key={index}
+        className={`
+          cell-button w-12 h-12 border border-gray-300
+          flex items-center justify-center text-2xl
+          transform transition-all duration-300
+          ${isWinningCell ? "scale-110 bg-green-200" : ""}
+          ${isLastMove ? "animate-pop-in" : ""}
+          hover:bg-gray-100
+        `}
         onClick={() => handleCellClick(index)}
         aria-label={`Cell ${index + 1}`}
-        aria-pressed={board[index] !== null}
-        role="gridcell"
+        data-testid={`cell-${index}`}
       >
         {board[index]}
       </button>
+    );
+  };
+
+  const renderBoard = () => {
+    return (
+      <div className="grid grid-cols-3 gap-2 md:gap-4 w-full max-w-[300px] md:max-w-[400px] lg:max-w-[500px] mx-auto">
+        {board.map((_, index) => renderCell(index))}
+      </div>
     );
   };
 
@@ -217,7 +250,6 @@ const Game = () => {
 
       if (response.status === 200) {
         console.log("Match history saved successfully!");
-        alert("Game Data Saved!");
         navigate("/");
       } else {
         console.log("Failed to save match history.");
@@ -229,6 +261,14 @@ const Game = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const isYourTurn = () => {
+    if (!isMultiplayer) return true;
+    const currentPlayer = players.find(
+      (p) => p.id === localStorage.getItem("playerId")
+    );
+    return currentPlayer?.turn;
   };
 
   return (
@@ -243,9 +283,9 @@ const Game = () => {
       <div className="flex items-center text-xl font-bold mb-4">
         {player1Name && player2Name && (
           <>
-            <p className="text-red-600 mx-2">{player1Name} </p>
+            <p className="text-red-600 mx-2">{player1Name}</p>
             VS
-            <p className="text-blue-600 mx-2">{player2Name} </p>
+            <p className="text-blue-600 mx-2">{player2Name}</p>
           </>
         )}
       </div>
@@ -256,18 +296,12 @@ const Game = () => {
       ) : showGame ? (
         <>
           {renderWinnerMessage()}
-          <div className="grid grid-cols-3 gap-4">
-            {board.map((cell, index) => (
-              <React.Fragment key={index}>{renderCell(index)}</React.Fragment>
-            ))}
-          </div>
+          {renderBoard()}
           {winner && (
             <div>
               <button
                 className="bg-blue-500 text-white py-2 px-4 mt-4 rounded"
-                onClick={() => {
-                  resetGame();
-                }}
+                onClick={resetGame}
               >
                 Play Again
               </button>
