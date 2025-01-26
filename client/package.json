@@ -2,9 +2,10 @@
   "name": "tictactoe-client",
   "version": "1.0.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "CI=false vite build",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
